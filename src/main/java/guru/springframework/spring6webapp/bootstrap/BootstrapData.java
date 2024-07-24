@@ -73,13 +73,21 @@ public class BootstrapData implements CommandLineRunner
         Book book2Saved = bookRepository.save(book2);
         Publisher puffinSaved = publisherRepository.save(puffin);
 
-        //association between authors and books
+        //association between authors and books for many-to-many join table
         ericSaved.getBooks().add(book1Saved);
         rodSaved.getBooks().add(book2Saved);
+        book1Saved.getAuthors().add(ericSaved);
+        book2Saved.getAuthors().add(rodSaved);
+
+        //association between books and publishers
+        book1Saved.setPublisher(puffinSaved);
+        book2Saved.setPublisher(penguinSaved);
 
         //persisting in the db
         authorRepository.save(ericSaved);
         authorRepository.save(rodSaved);
+        bookRepository.save(book1Saved);
+        bookRepository.save(book2Saved);
         publisherRepository.save(penguinSaved);
         publisherRepository.save(puffinSaved);
 
